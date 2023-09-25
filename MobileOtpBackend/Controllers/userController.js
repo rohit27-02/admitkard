@@ -8,15 +8,10 @@ const { Otp } = require('../Models/otpModel');
 
 const twilio = require('twilio');
 
-const accountSid = 'AC312c29ca9251e3c26ccc88d1e1428c5a';
-const authToken = 'e114c0ee75ade7e205a1a3dc4f0345b4';
+const accountSid = process.env.TWILIO_SID;
+const authToken = process.env.TWILIO_TOKEN;
 
 const client = twilio(accountSid, authToken);
-
-
-
-
-
 
 
 module.exports.signUp = async (req, res) => {
@@ -44,7 +39,7 @@ module.exports.signUp = async (req, res) => {
     client.messages
         .create({
             body: message,
-            from: '+12512205003', // Your Twilio phone number
+            from: process.env.TWILIO_NUMBER, // Your Twilio phone number
             to: mobileNumber // Recipient's mobile number
         })
         .then(message => {
